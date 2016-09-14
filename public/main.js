@@ -2,10 +2,14 @@
 
 let userData = {};
 
-function filter (str, rules = ['КЕК', 'ПЕК', 'KEK']) {
-  var result = str;
+function filter (str, rules = ['kek', 'кек', 'shrek', 'пек']) {
+  var result = str.toLowerCase();
   rules.forEach(function(item, i, rules) {
-    result = result.replace(item, '***');
+    var patch = "";
+    for (var i = 0; i < item.length; i++) {
+      patch = patch + "*"
+    }
+    result = result.replace(item, patch);
   })
   return result;
 }
@@ -39,7 +43,7 @@ function createMessage (opts, isMy = false) {
   } else {
     message.style.backgroundColor = `#${technolibs.colorHash(opts.email || '')}`;
   }
-  message.innerHTML = opts.message;
+  message.innerHTML = filter(opts.message);
   email.innerHTML = opts.email;
   message.appendChild(email);
 
