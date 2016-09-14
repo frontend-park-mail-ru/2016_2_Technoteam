@@ -2,8 +2,12 @@
 
 let userData = {};
 
-function filter (str, rules = ['КЕК']) {
-  return `//TODO: реализовать filter`;
+function filter (str, rules = ['КЕК', 'ПЕК', 'KEK']) {
+  var result = str;
+  rules.forEach(function(item, i, rules) {
+    result = result.replace(item, '***');
+  })
+  return result;
 }
 
 function onLogin (form, block) {
