@@ -3,21 +3,17 @@
 	let userData = {};
 
 function filter (str, rules = ['kek', 'кек', 'shrek', 'пек', 'шрек',
-                              'dreamworks', '(.)(.)', '.!..']) {
-  var result = str.toLowerCase();
+                              'dreamworks']) {
+  var result = str;
   rules.forEach(function(item, i, rules) {
     var patch = "";
     for (var i = 0; i < item.length; i++) {
       patch = patch + "*"
     }
-    result = result.replace(item, patch);
+    result = result.replace(new RegExp('\s?' + item + '\s?', 'gi'), patch);
   })
 
-  var resultNormalCase = "";
-  for (var i = 0; i < result.length; i++) {
-    resultNormalCase += result[i] == '*' ? '*' : str[i];
-  }
-  return resultNormalCase;
+  return result;
 }
 
 function onLogin (form, block) {
