@@ -1,12 +1,10 @@
 'use strict';
 
-	let data = {
-		user: form.elements['user'].value,
-		email: form.elements['email'].value
-	};
+	let userData = {};
 
-function filter (str, rules = ['kek', 'кек', 'shrek', 'пек', 'KEK', 'КЕК']) {
-  var result = str;
+function filter (str, rules = ['kek', 'кек', 'shrek', 'пек', 'шрек',
+                              'dreamworks', '(.)(.)', '.!..']) {
+  var result = str.toLowerCase();
   rules.forEach(function(item, i, rules) {
     var patch = "";
     for (var i = 0; i < item.length; i++) {
@@ -14,7 +12,12 @@ function filter (str, rules = ['kek', 'кек', 'shrek', 'пек', 'KEK', 'КЕ�
     }
     result = result.replace(item, patch);
   })
-  return result;
+
+  var resultNormalCase = "";
+  for (var i = 0; i < result.length; i++) {
+    resultNormalCase += result[i] == '*' ? '*' : str[i];
+  }
+  return resultNormalCase;
 }
 
 function onLogin (form, block) {
@@ -79,6 +82,27 @@ function subscribe () {
   });
 }
 
+function plur(num){
+	switch(num%10){
+		case 2:
+		case 3:
+		case 4:  return 'раза';
+		default: return 'раз';
+	}
+}
+
+function plural(num){
+	if(num == 0)
+		return 'Здравствуй, дух';
+	if(num == 1)
+		return 'Рады приветствовать на нашем курсе!';
+	var count = 15;
+	if (num < count){
+		return ("Кликай дальше!! Еще осталось " + (count-num) + " раз(а)");
+	}
+	return '01001000 01101001 00101100 00100000 01100010 01110010 01101111';
+}
+
 function hello(text) {
   return 'Привет, ' + text;
 }
@@ -86,4 +110,6 @@ function hello(text) {
 if (typeof exports === 'object') {
   exports.hello = hello;
   exports.filter = filter;
+  exports.plural = plural;
+  exports.plur = plur;
 }

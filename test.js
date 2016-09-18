@@ -15,6 +15,10 @@ assert.equal(plural(100), '01001000 01101001 00101100 00100000 01100010 01110010
 
 assert.equal(hello('Test'), 'Привет, Test');
 assert.equal(filter('КЕК ПЕК'), '*** ***');
+assert.equal(filter('Check out muh (.)(.)'), 'Check out muh ******');
+assert.equal(filter('God I hate this Shrek movie and the fucking dreamworks ' +
+  'company! They gave birth to Kek! .!.. them!!!'), 'God I hate this ***** ' +
+   'movie and the fucking ********** company! They gave birth to ***! **** them!!!');
 assert.equal(filter('КЕК ПЕК, Shrek is a kek.'), '*** ***, ***** is a ***.');
 assert.equal(filter('shrek must die cause he is a total kek!'),
                     '***** must die cause he is a total ***!');
