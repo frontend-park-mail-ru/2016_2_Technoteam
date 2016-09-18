@@ -1,6 +1,9 @@
 'use strict';
 
-let userData = {};
+	let data = {
+		user: form.elements['user'].value,
+		email: form.elements['email'].value
+	};
 
 function filter (str, rules = ['kek', 'кек', 'shrek', 'пек', 'KEK', 'КЕК']) {
   var result = str;
