@@ -3,24 +3,24 @@ function onSubmit(form){
 
 	let data = {
 		user: form.elements['user'].value,
-		email: form.elements['email'].value	
+		email: form.elements['email'].value
 	};
 
-	/*request('/users', data);*/
-
-	let result = request('/users', data); 
+	let result = request('/users', data);
 
 	form.hidden = true;
-	let strCount;
-	switch(+result){
+	window.helloWorld.innerHTML = hello(data.user) + ' ' + plural(result) + ' заходил ' + result + ' ' + plur(+result);;
+
+	console.log(data, result);
+}
+
+function plur(num){
+	switch(num%10){
 		case 2:
 		case 3:
-		case 4:  strCount = 'раза'; break;
-		default: strCount = 'раз'; break;
+		case 4:  return 'раза';
+		default: return 'раз';
 	}
-	window.helloWorld.innerHTML = hello(data.user) + ' ' + plural(result) + ' заходил ' + result + ' ' + strCount;
-	
-	console.log(data, result);
 }
 
 function hello(text) {
@@ -28,7 +28,6 @@ function hello(text) {
 }
 
 function plural(num){
-	
 	if(num == 0)
 		return 'Здравствуй, дух';
 	if(num == 1)
@@ -41,6 +40,7 @@ function plural(num){
 }
 
 if(typeof(exports) === 'object') {
-                exports.hello = hello;
+    exports.hello = hello;
 		exports.plural = plural;
+		exports.plur = plur;
 }

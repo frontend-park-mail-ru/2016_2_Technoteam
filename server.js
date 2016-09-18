@@ -16,7 +16,6 @@ app.post('/users', (req, res) => {
     let counter = (emails.get(email) || 0);
     emails.set(email, counter + 1);
     res.send(counter.toString());
-    // TODO: вернуть количество обращений
 });
 
 app.listen(process.env.PORT || 3000, () => {
