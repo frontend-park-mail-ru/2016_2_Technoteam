@@ -13,6 +13,12 @@ assert.equal(plural(13), 'Кликай дальше!! Еще осталось 2 
 assert.equal(plural(15), '01001000 01101001 00101100 00100000 01100010 01110010 01101111');
 assert.equal(plural(100), '01001000 01101001 00101100 00100000 01100010 01110010 01101111');
 
+assert.equal(plur(0), 'раз');
+assert.equal(plur(1), 'раз');
+assert.equal(plur(2), 'раза');
+assert.equal(plur(12), 'раз');
+assert.equal(plur(101), 'раз');
+assert.equal(plur(204), 'раза');
 assert.equal(hello('Test'), 'Привет, Test');
 assert.equal(filter('КЕК ПЕК'), '*** ***');
 assert.equal(filter('КЕК КЕК'), '*** ***');

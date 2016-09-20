@@ -79,12 +79,22 @@ function subscribe () {
 }
 
 function plur(num){
+	switch(num%100){
+		case 12:
+		case 13:
+		case 14:  return 'раз';
+		default: break;
+	}
 	switch(num%10){
 		case 2:
 		case 3:
 		case 4:  return 'раза';
 		default: return 'раз';
 	}
+}
+
+function hello(text) {
+	return 'Привет, ' + text;
 }
 
 function plural(num){
