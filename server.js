@@ -24,7 +24,8 @@ app.post('/users', (req, res) => {
     let email = req.body.email;
     let counter = (emails.get(email) || 0);
     emails.set(email, counter + 1);
-    res.send(counter.toString());
+    res.send(counter.toString())});
+
 app.get('/api/messages', function (req, res) {
 	res.send([
 		technoDoc.mock(require('./api/scheme/Message')),
