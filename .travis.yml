@@ -1,3 +1,13 @@
 language: node_js
 node_js:
 - 6
+branches:
+  only:
+  - master
+deploy:
+  - provider: heroku
+    api_key:
+      secure: gfsSbQjWg8yWnlXvX2lQp7KfBCI8y9nmmxO3QZq443SZaJbE89VwYrmjv+FxqTBr1vPmql0XBAwcVEgGX7hMcEyz6LGwsTRDVNCj80AJsRkU/jA3N1rGO2Zw0Xj5PG0qra+JqoR73AJ4UrHN8B1EFg2uWwtW9JBve+VMRrB8BBwT0i0yb3x21LcxSvlBZKLQjqYifthcMdH9nIzFkay976Wsr7MH4HjwxgZDxwnbooNUHJiFNN1l9AkMqb7abz9tEmXssGeqXPUrqnUiPyKyPOFIcl1MZRV/FQ//gbAYWgGmWn/NnrViOVBtN9m/MFVfVmIQrh6Xzh2ZBz8aSjdrY1tpCTLL/hfsecC8a2S6c8VJud777UBN0S/NAajwU11Dp/o7pfIkDF70b8yt3T35jLRGzn0/nfaz8jrec6gMlMzmpzEhjbSt4HZjb4zXH8HDayPZfXqNkSh2hY1ys5lckPfMlfhhPn1NJ4bPPcSmcE/WT3VGgpmJ7ZfJwtFn4ws8De8DHZV+2nxvWhhBVaUG/rVk7gPleFQ7hvikw1YoKOaQN6prW39qIYuz6DU8CLZjZnA8i5jS6Kfw8fwUG5vvCsfFlU6IBcAiQ57iWP28V24UZuSOKw91Qw6yktlwsGfM8k/GvyW8t5FYlvLyCL+JTCf1itShzSEGuZ4bxyLg7mY=
+    app: technoteam
+    on:
+      repo: frontend-park-mail-ru/2016_2_Technoteam
