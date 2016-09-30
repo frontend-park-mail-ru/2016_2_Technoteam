@@ -102,15 +102,15 @@
 
     validate() {
       const fields = this.getFormData();
-      let status = 0;
+      let isValid = true;
 
       Object.keys(fields).forEach((value) => {
         if (fields[value] === '') {
           alert(`Field ${value} must not be empty`);
-          status = 1;
+          isValid = false;
         }
       });
-      return status;
+      return isValid;
     }
   }
 

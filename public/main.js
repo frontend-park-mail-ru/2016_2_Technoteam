@@ -94,18 +94,18 @@
     loginForm.on('submit', (event) => {
       event.preventDefault();
 
-      if (loginForm.validate()) return;
+      if (!loginForm.validate()) return;
 
       const formData = loginForm.getFormData();
-      const response = request('http://127.0.0.1:8080/api/session', formData, 'POST');
-      if (response === 'fail') return;
+      const response = request('http://the-backend.herokuapp.com/api/session', formData, 'POST');
+      if (response === null) return;
 
       const responseObj = JSON.parse(response);
 
       alert(responseObj.toString());
       chat.set({
         username: formData.login,
-        email: formData.password,
+        email: formData.login,
       }).render();
 
       chat.subscribe();
@@ -118,11 +118,11 @@
 
     registerForm.on('submit', (event) => {
       event.preventDefault();
-      if (registerForm.validate()) return;
+      if (!registerForm.validate()) return;
 
       const formData = registerForm.getFormData();
-
-      if (request('http://127.0.0.1:8080/api/user', formData, 'POST') === 'fail') return;
+      const response = request('http://the-backend.herokuapp.com/api/user', formData, 'POST');
+      if (response === null) return;
 
       loginPage.hidden = false;
       chatPage.hidden = true;

@@ -5,7 +5,7 @@
     xhr.setRequestHeader('Content-Type', 'application/json');
     const data1 = JSON.stringify(data);
     xhr.send(data1);
-    if (xhr.status !== 200) return 'fail';
+    if (xhr.status !== 200) return null;
 
     return xhr.responseText;
   }
