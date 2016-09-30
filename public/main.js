@@ -1,121 +1,141 @@
-'use strict';
+(function () {
+  if (typeof window === 'object') {
+    // import
+    const Chat = window.Chat;
+    const Form = window.Form;
+    const Button = window.Button;
 
-	let userData = {};
+    const loginPage = document.querySelector('.js-login');
+    const registerPage = document.querySelector('.js-register');
+    const chatPage = document.querySelector('.js-chat');
+    const registerButton = document.querySelector('.js-reg-button');
 
-function filter (str, rules = ['kek', 'кек', 'shrek', 'пек', 'шрек',
-                              'dreamworks']) {
-  var result = str;
-  rules.forEach(function(item, i, rules) {
-    var patch = "";
-    for (var i = 0; i < item.length; i++) {
-      patch = patch + "*"
-    }
-    result = result.replace(new RegExp('\s?' + item + '\s?', 'gi'), patch);
-  })
+    const regButton = new Button({
+      text: 'Sign up',
+    });
 
-  return result;
-}
+    regButton.on('click', (event) => {
+      event.preventDefault();
 
-function onLogin (form, block) {
-  userData = {
-    user: form.elements['user'].value,
-    email: form.elements['email'].value
-  };
+      loginPage.hidden = true;
+      chatPage.hidden = true;
+      registerPage.hidden = false;
+      registerButton.hidden = true;
+    });
 
-   jsLogin.hidden = true;
-   jsChat.hidden = false;
+    const loginForm = new Form({
+      el: document.createElement('div'),
+      data: {
+        title: 'Login',
+        fields: [
+          {
+            label: 'Login',
+            name: 'login',
+            type: 'text',
+          },
+          {
+            label: 'password',
+            name: 'password',
+            type: 'password',
+          },
+        ],
+        controls: [
+          {
+            text: 'Войти',
+            attrs: {
+              type: 'submit',
+            },
+          },
+        ],
+      },
+    });
 
-   if (userData.user) {
-     userData.user = filter(userData.user);
-     jsTitle.innerHTML = jsTitle.innerHTML.replace('%username%', userData.user);
-   }
+    const registerForm = new Form({
+      el: document.createElement('div'),
+      data: {
+        title: 'Sign up',
+        fields: [
+          {
+            label: 'Login',
+            name: 'login',
+            type: 'text',
+          },
+          {
+            label: 'email',
+            name: 'email',
+            type: 'email',
+          },
+          {
+            label: 'Password',
+            name: 'password',
+            type: 'password',
+          },
+          {
+            label: 'Confirm password',
+            name: 'confirm_password',
+            type: 'password',
+          },
+        ],
+        controls: [
+          {
+            text: 'Sign up',
+            attrs: {
+              type: 'submit',
+            },
+          },
+        ],
+      },
+    });
 
-   subscribe();
-}
+    const chat = new Chat({
+      el: document.createElement('div'),
+    });
 
-function createMessage (opts, isMy = false) {
-  let message = document.createElement('div');
-  let email = document.createElement('div');
+    loginForm.on('submit', (event) => {
+      event.preventDefault();
 
-  message.classList.add('chat__message');
-  email.classList.add('chat__email');
+      if (!loginForm.validate()) return;
 
-  if (isMy) {
-    message.classList.add('chat__message_my');
-  } else {
-    message.style.backgroundColor = `#${technolibs.colorHash(opts.email || '')}`;
+      const formData = loginForm.getFormData();
+      const response = request('http://the-backend.herokuapp.com/api/session', formData, 'POST');
+      if (response === null) return;
+
+      const responseObj = JSON.parse(response);
+
+      alert(responseObj.toString());
+      chat.set({
+        username: formData.login,
+        email: formData.login,
+      }).render();
+
+      chat.subscribe();
+
+      loginPage.hidden = true;
+      regButton.hidden = true;
+      registerPage.hidden = true;
+      chatPage.hidden = false;
+    });
+
+    registerForm.on('submit', (event) => {
+      event.preventDefault();
+      if (!registerForm.validate()) return;
+
+      const formData = registerForm.getFormData();
+      const response = request('http://the-backend.herokuapp.com/api/user', formData, 'POST');
+      if (response === null) return;
+
+      loginPage.hidden = false;
+      chatPage.hidden = true;
+      registerPage.hidden = true;
+      registerButton.hidden = false;
+    });
+
+
+    loginPage.appendChild(loginForm.el);
+    chatPage.appendChild(chat.el);
+    registerPage.appendChild(registerForm.el);
+    registerButton.appendChild(regButton.el);
+
+    loginPage.hidden = false;
   }
-  message.innerHTML = filter(opts.message);
-  email.innerHTML = opts.email;
-  message.appendChild(email);
-
-
-  return message;
-}
-
-function onChat (form) {
-  let data = {
-    message: form.elements['message'].value,
-    email: userData.email
-  };
-
-  let result = technolibs.request('/api/messages', data);
-  form.reset();
-}
-
-function renderChat (items) {
-  jsMessages.innerHTML = '';
-  items.forEach(item => {
-    let message = createMessage(item, item.email === userData.email);
-    jsMessages.appendChild(message);
-  });
-  jsMessages.scrollTop = jsMessages.scrollHeight;
-}
-
-function subscribe () {
-  technolibs.onMessage(data => {
-    renderChat(Object.keys(data).map(key => data[key]));
-  });
-}
-
-function plur(num){
-	switch(num%100){
-		case 12:
-		case 13:
-		case 14:  return 'раз';
-		default: break;
-	}
-	switch(num%10){
-		case 2:
-		case 3:
-		case 4:  return 'раза';
-		default: return 'раз';
-	}
-}
-
-function hello(text) {
-	return 'Привет, ' + text;
-}
-
-function plural(num){
-	if(num == 0)
-		return 'Здравствуй, дух';
-	if(num == 1)
-		return 'Рады приветствовать на нашем курсе!';
-	var count = 15;
-	if (num < count){
-		return ("Кликай дальше!! Еще осталось " + (count-num) + " раз(а)");
-	}
-	return '01001000 01101001 00101100 00100000 01100010 01110010 01101111';
-}
-
-function hello(text) {
-  return 'Привет, ' + text;
-}
-
-if (typeof exports === 'object') {
-  exports.hello = hello;
-  exports.filter = filter;
-  exports.plural = plural;
-  exports.plur = plur;
-}
+})();
